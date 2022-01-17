@@ -2,6 +2,8 @@ package com.board.spring.service;
 
 import com.board.spring.domain.BoardDTO;
 import com.board.spring.mapper.BoardMapper;
+import com.board.spring.paging.Criteria;
+import com.board.spring.paging.PaginationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,22 +38,27 @@ public class BoardServiceImpl implements BoardService{
     public boolean deleteBoard(Long idx) {
         int queryResult = 0;
 
-        BoardDTO boardDTO = boardMapper.selectBoardDetail(idx);
+        BoardDTO board = boardMapper.selectBoardDetail(idx);
 
-        if (boardDTO != null && "N".equals(boardDTO.getDeleteYn())) {
+        if (board != null && "N".equals(board.getDeleteYn())) {
             queryResult = boardMapper.deleteBoard(idx);
         }
         return (queryResult == 1) ? true : false;
     }
 
     @Override
-    public List<BoardDTO> getBoardList() {
+    public List<BoardDTO> getBoardList(BoardDTO params) {
         List<BoardDTO> boardList = Collections.emptyList();
 
-        int boardTotalCount = boardMapper.selectBoardTotalCount();
+        int boardTotalCount = boardMapper.selectBoardTotalCount(params);
+
+        PaginationInfo paginationInfo = new PaginationInfo(params);
+        paginationInfo.setTotalRecordCount(boardTotalCount);
+
+        params.setPaginationInfo(paginationInfo);
 
         if (boardTotalCount > 0) {
-            boardList = boardMapper.selectBoardList();
+            boardList = boardMapper.selectBoardList(params);
         }
         return boardList;
     }

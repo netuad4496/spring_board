@@ -1,6 +1,7 @@
 package com.board.spring.service;
 
 import com.board.spring.domain.BoardDTO;
+import com.board.spring.paging.Criteria;
 
 import java.util.List;
 
@@ -16,5 +17,5 @@ public interface BoardService {
     public boolean deleteBoard(Long idx);
 
     // 전체글 조회
-    public List<BoardDTO> getBoardList();
+    public List<BoardDTO> getBoardList(BoardDTO params);
 }

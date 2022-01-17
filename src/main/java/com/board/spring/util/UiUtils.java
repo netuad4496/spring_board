@@ -1,10 +1,12 @@
 package com.board.spring.util;
 
 import com.board.spring.constant.Method;
+import com.board.spring.paging.Criteria;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Controller
