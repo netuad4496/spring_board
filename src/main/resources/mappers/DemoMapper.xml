@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.board.spring.mapper.DemoMapper">
+    <sql id="DemoColumns">
+        idx
+        , title
+        , content
+        , writer
+        , view_cnt
+        , notice_yn
+        , secret_yn
+        , delete_yn
+        , insert_time
+        , update_time
+        , delete_time
+
+    </sql>
+
+    <insert id="insertDemo" parameterType="DemoDTO" >
+        INSERT INTO tb_demolist (
+            <include refid="DemoColumns" />
+        ) VALUE (
+            #{idx},
+            #{title},
+            #{content},
+            #{writer},
+            0,
+            IFNULL(#{noticeYn}, 'N'),
+            IFNULL(#{secretYn}, 'N'),
+            'N',
+            NOW(),
+            NULL,
+            NULL
+        )
+    </insert>
+
+    <select id="selectList" parameterType="DemoDTo" resultType="DemoDTO">
+        SELECT
+            <include refid="DemoColumns" />
+        FROM
+            tb_demolist
+        WHERE
+            delete_yn = 'N'
+        ORDER BY
+            notice_yn ASC,
+            idx DESC
+    </select>
+    
+    <select id="selectDetail" parameterType="Long" resultType="DemoDTO">
+        SELECT
+            <include refid="DemoColumns" />
+        FROM
+            tb_demolist
+        WHERE
+            idx = #{idx}
+        AND
+            delete_yn = 'N'
+    </select>
+
+</mapper>

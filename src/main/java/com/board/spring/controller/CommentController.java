@@ -39,9 +39,6 @@ public class CommentController {
         return jsonobj;
     }
 
-
-
-
     @GetMapping(value = "/comments/{boardIdx}")
     public JsonObject getCommentList(@PathVariable("boardIdx") Long boardIdx, @ModelAttribute("params") CommentDTO params) {
 
