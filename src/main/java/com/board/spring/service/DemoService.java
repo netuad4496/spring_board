@@ -3,6 +3,7 @@ package com.board.spring.service;
 import com.board.spring.domain.BoardDTO;
 import com.board.spring.domain.DemoDTO;
 import com.board.spring.mapper.DemoMapper;
+import com.board.spring.paging.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +21,25 @@ public class DemoService {
 
         if (params.getIdx() == null) {
             queryResult = demoMapper.insertDemo(params);
+        } else {
+            queryResult = demoMapper.updateDemo(params);
         }
 
         return (queryResult == 1)? true : false;
     }
 
-    public List<DemoDTO> selectDemoList(DemoDTO params) {
+    public boolean deleteDemo(Long idx) {
+        int queryResult = 0;
+
+        queryResult = demoMapper.deleteDemo(idx);
+
+        return (queryResult == 1)? true : false;
+    }
+
+    public List<DemoDTO> selectDemoList(Criteria criteria) {
         List<DemoDTO> demoList = Collections.emptyList();
 
-        demoList = demoMapper.selectList(params);
+        demoList = demoMapper.selectList(criteria);
 
         return demoList;
     }

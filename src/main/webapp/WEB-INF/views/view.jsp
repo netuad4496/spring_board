@@ -8,10 +8,14 @@
     <link rel="stylesheet" href="../css/style.css" type="text/css">
 </head>
 <body>
+<div class="fixed-navbar">
+    <div class="pull-left">
+        <h1 class="page-title">Demo Detail</h1>
+    </div>
+</div>
 
 <div class="table-responsive clearfix">
     <div class="main-content">
-
         <div class="card-content">
             <form class="form-horizontal form-view">
                 <div class="form-group">
@@ -48,14 +52,35 @@
                         <p class="form-control">${demo.insertTime}</p>
                     </div>
                 </div>
-
-                <a href="index.do">뒤로가기</a>
             </form>
+            <div class="btn_wrap text-center">
+                <a href="index.do" class="btn btn-default waves-effect waves-light">뒤로가기</a>
+                <input type="button" onclick="deleteDemo(${demo.idx});" class="btn btn-danger waves-effect waves-light" value="삭제하기"></input>
+                <a href="Regis.do?idx=${demo.idx}" class="btn btn-primary waves-effect waves-light">수정하기</a>
+            </div>
         </div>
-
     </div>
 </div>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+<script>
+    function deleteDemo(idx) {
+        console.log(idx);
+
+        if(confirm("정말 삭제하겠습니까?")) {
+
+            let form = document.createElement('form');
+            form.action = 'deleteDemo';
+            form.method = 'POST';
+            form.innerHTML = '<input name="idx" value="' + idx + '">';
+
+            document.body.append(form);
+
+            form.submit();
+        } else {
+            return;
+        }
+
+    }
+
 </script>
 </html>

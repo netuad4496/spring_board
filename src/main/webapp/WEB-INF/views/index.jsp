@@ -27,6 +27,7 @@
                     <th scope="col">제목</th>
                     <th scope="col">작성자</th>
                     <th scope="col">조회 수</th>
+                    <th scope="col" style="width: 20%">등록일</th>
                 </tr>
                 <c:forEach var="i" items="${demolist}" begin="0" step="1">
                     <tr>
@@ -36,9 +37,10 @@
                                 <c:when test="${i.noticeYn eq 'N'}">${i.idx}</c:when>
                             </c:choose>
                         </td>
-                        <td> <a href="view.do?idx=${i.idx}"">${i.title}</a></td>
+                        <td> <a href="view.do?idx=${i.idx}">${i.title}</a></td>
                         <td>${i.writer}</td>
                         <td>${i.viewCnt}</td>
+                        <td>${i.insertTime}</td>
                     </tr>
                 </c:forEach>
                 </tbody>

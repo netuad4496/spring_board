@@ -35,7 +35,7 @@
         )
     </insert>
 
-    <select id="selectList" parameterType="DemoDTo" resultType="DemoDTO">
+    <select id="selectList" parameterType="DemoDTO" resultType="DemoDTO">
         SELECT
             <include refid="DemoColumns" />
         FROM
@@ -45,6 +45,17 @@
         ORDER BY
             notice_yn ASC,
             idx DESC
+        LIMIT
+            #{currentPageNo}, #{recordsPerPage}
+    </select>
+
+    <select id="selectDemoCount" parameterType="Criteria" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            tb_demolist
+        WHERE
+            delete_yn = 'N'
     </select>
     
     <select id="selectDetail" parameterType="Long" resultType="DemoDTO">
@@ -57,5 +68,31 @@
         AND
             delete_yn = 'N'
     </select>
+
+    <update id="updateDemo" parameterType="DemoDTO">
+        UPDATE
+            tb_demolist
+        SET
+            update_time = NOW(),
+            title = #{title},
+            content = #{content},
+            writer = #{writer},
+            notice_yn = IFNULL(#{noticeYn}, 'N'),
+            secret_yn = IFNULL(#{secretYn}, 'N')
+        WHERE
+            idx = #{idx}
+
+    </update>
+
+    <update id="deleteDemo" parameterType="Long">
+        UPDATE
+            tb_demolist
+        SET
+            delete_time = NOW(),
+            delete_yn = 'Y'
+        WHERE
+            idx = #{idx}
+    </update>
+
 
 </mapper>
